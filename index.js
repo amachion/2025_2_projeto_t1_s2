@@ -1,5 +1,10 @@
+//esta é a conexão com o banco
+//
+
+
 const express = require('express')
 const cors = require('cors')
+const mongoose = require('mongoose')
 const app = express()
 app.use(express.json())
 app.use(cors())
@@ -8,6 +13,11 @@ app.use(cors())
 app.get('/oi', (req, res) => {
     res.send('oi')
 })
+
+//função de conexão com o banco
+async function conectarAoMongoDB () {
+  await mongoose.connect('mongodb+srv://<seu usuario>:<sua senha>@cluster0.d7majmq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+}
 
 //endpoint para atender um get filmes: http://localhost:3000/filmes
 app.get('/filmes', (req, res) => {
@@ -41,6 +51,12 @@ let filmes = [
 ];
 
 
-app.listen(3000, () => 
-    console.log('server up & running')
-)
+app.listen(3000, () => {
+    try {
+      conectarAoMongoDB()
+      console.log('server up & running & conexão ok')
+    }
+    catch (e) {
+      console.log("erro:" + e)
+    }
+})
