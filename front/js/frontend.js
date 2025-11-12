@@ -45,15 +45,10 @@ async function cadastrarFilme() {
       celulaTitulo.innerHTML = filme.titulo;
       celulaSinopse.innerHTML = filme.sinopse;
     }
+    exibirAlerta ('.alert-filme', 'Filme cadastrado com sucesso!!!', ['show', 'alert-success'], ['d-none', 'alert-danger'], 2000)
   }
   else {
-    let alert = document.querySelector('.alert')
-    alert.classList.add('show')
-    alert.classList.remove('d-none')
-    setTimeout(() => {
-        alert.classList.add('d-none')
-        alert.classList.remove('show')
-    }, 2000)
+    exibirAlerta ('.alert-filme', 'Preencha todos os campos!!!', ['show', 'alert-danger'], ['d-none', 'alert-success'], 2000)
   }
 }
 async function cadastrarUsuario() {
@@ -72,32 +67,35 @@ async function cadastrarUsuario() {
       //limpa as caixinhas
       usuarioCadastroInput.value = ""
       passwordCadastroInput.value = ""
-      let alert = document.querySelector('.alert-modal-cadastro')
-      alert.innerHTML = "Usuário cadastrado com sucesso!"
-      alert.classList.add('show', 'alert-success')
-      alert.classList.remove('d-none', 'alert-danger')
-      setTimeout(() => {
-        alert.classList.add('d-none')
-        alert.classList.remove('show')
-        //fechar o modal
-        let modalCadastro = bootstrap.Modal.getInstance(document.querySelector('#modalCadastro'))
-        modalCadastro.hide()
-      }, 2000)
+
+      exibirAlerta ('.alert-modal-cadastro', "Usuário cadastrado com sucesso!", ['show', 'alert-success'], ['d-none', 'alert-danger'], 2000)
+      esconderModal ('#modalCadastro', 2000)
     }
     catch (erro) {
-
+      exibirAlerta ('.alert-modal-cadastro', "Usuário já existe!", ['show', 'alert-danger'], ['d-none', 'alert-success'], 2000)
+      esconderModal ('#modalCadastro', 2000)
     }
   }
   else {
     //exibir alerta para digitar campos
-    let alert = document.querySelector('.alert-modal-cadastro')
-    alert.innerHTML = "Preencha todos os campos!"
-    alert.classList.add('show', 'alert-danger')
-    alert.classList.remove('d-none')
-    setTimeout(() => {
-      alert.classList.add('d-none')
-      alert.classList.remove('show')
-    }, 2000)
+    exibirAlerta ('.alert-modal-cadastro', "Preencha todos os campos!!!", ['show', 'alert-danger'], ['d-none', 'alert-success'], 2000)
   }
-  
+}
+
+function exibirAlerta(seletor, innerHTML, classesToAdd, classesToRemove, timeout) {
+  let alert = document.querySelector(seletor)
+  alert.innerHTML = innerHTML
+  alert.classList.add(...classesToAdd)
+  alert.classList.remove(...classesToRemove)
+  setTimeout(() => {
+    alert.classList.add(...classesToRemove)
+    alert.classList.remove(...classesToAdd)
+  }, timeout)
+}
+
+function esconderModal (seletor, timeout) {
+  setTimeout (() => {
+    let modal = bootstrap.Modal.getInstance(document.querySelector(seletor))
+    modal.hide()
+  }, timeout)
 }
