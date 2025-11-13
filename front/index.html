@@ -92,7 +92,7 @@
 
             <div class="collapse navbar-collapse" id="myNav">
               <div class="navbar-nav ms-auto">
-                <a href="#" class="nav-link active me-2" aria-current="page"
+                <a href="#" class="nav-link active me-2" aria-current="page" id="loginLink"
                    data-bs-toggle="modal" data-bs-target="#modalLogin">Login</a>
                 <a href="#" class="nav-link active me-2" 
                    data-bs-toggle="modal" data-bs-target="#modalCadastro">Novo usuário</a>
@@ -129,7 +129,8 @@
 
       <div class="row justify-content-center">
         <div class="col-md-8">
-          <button class="btn btn-outline-primary w-100" onclick="cadastrarFilme()" disabled>
+          <button class="btn btn-outline-primary w-100" onclick="cadastrarFilme()" 
+                  disabled id="cadastrarFilmeButton">
             Cadastrar
           </button>
         </div>
